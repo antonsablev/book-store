@@ -39,4 +39,3 @@ public class BookServiceImpl implements BookService {
     }
 }
 
-ё
