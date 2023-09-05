@@ -37,4 +37,24 @@ public class BookServiceImpl implements BookService {
                 .map(bookMapper::toDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void delete(Long id) {
+        bookRepository.deleteById(id);
+    }
+
+    @Override
+    public BookDto updateById(Long id, CreateBookRequestDto requestDto) {
+        Book updatedBook = bookMapper.toModel(requestDto);
+        updatedBook.setId(id);
+        bookRepository.save(updatedBook);
+        return bookMapper.toDto(updatedBook);
+    }
+
+    @Override
+    public List<BookDto> findByTitle(String bookTitle) {
+        return bookRepository.findAllByTitleContainingIgnoreCase(bookTitle).stream()
+                .map(bookMapper::toDto)
+                .toList();
+    }
 }
