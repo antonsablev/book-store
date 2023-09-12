@@ -24,24 +24,29 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
 
     @Override
-    public UserDto save(CreateUserRequestDto userRequestDto) {
+    public UserDto saveUser(CreateUserRequestDto userDto) {
+        User user = this.getUser(userDto);
+        user.setRoles(Set.of(roleRepository.findByName(Role.RoleName.USER)
+                .orElseThrow(() -> new EntityNotFoundException("Can't find Role"))));
+        userRepository.save(user);
+        return userMapper.toDto(user);
+    }
+
+    @Override
+    public UserDto saveAdmin(CreateUserRequestDto userDto) {
+        User user = this.getUser(userDto);
+        user.setRoles(Set.of(roleRepository.findByName(Role.RoleName.ADMIN)
+                .orElseThrow(() -> new EntityNotFoundException("Can't find Role"))));
+        userRepository.save(user);
+        return userMapper.toDto(user);
+    }
+
+    private User getUser(CreateUserRequestDto userRequestDto) {
         if (userRepository.getByEmail(userRequestDto.getEmail()).isPresent()) {
             throw new RegistrationException("Can't complete registration");
         }
         User user = userMapper.toModel(userRequestDto);
         user.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
-        user.setRoles(Set.of(setRole(user.getEmail())));
-        userRepository.save(user);
-        return userMapper.toDto(user);
-    }
-
-    private Role setRole(String userEmail) {
-        if (userEmail.startsWith("admin")) {
-            return roleRepository.findByName(Role.RoleName.ADMIN)
-                    .orElseThrow(() -> new EntityNotFoundException("Can't find Role"));
-        } else {
-            return roleRepository.findByName(Role.RoleName.USER)
-                    .orElseThrow(() -> new EntityNotFoundException("Can't find Role"));
-        }
+        return user;
     }
 }
