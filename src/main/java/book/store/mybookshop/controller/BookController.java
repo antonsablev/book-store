@@ -55,7 +55,7 @@ public class BookController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/add-category-to-book/{bookId}")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Create book", description = "You can create new book")
+    @Operation(summary = "Add category to book", description = "You can add category to book")
     public void addCategoryToBook(@PathVariable Long bookId, @RequestParam Long categoryId) {
         bookService.addCategoryToId(bookId, categoryId);
     }
