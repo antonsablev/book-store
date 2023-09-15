@@ -22,5 +22,4 @@ public interface BookService {
     List<BookDtoWithoutCategoryIds> getByCategory(Long id);
 
     void addCategoryToId(Long bookId, Long categoryId);
-
 }
