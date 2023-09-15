@@ -2,17 +2,32 @@ package book.store.mybookshop.mapper;
 
 import book.store.mybookshop.config.MapperConfig;
 import book.store.mybookshop.dto.BookDto;
+import book.store.mybookshop.dto.BookDtoWithoutCategoryIds;
 import book.store.mybookshop.dto.CreateBookRequestDto;
 import book.store.mybookshop.model.Book;
+import book.store.mybookshop.model.Category;
+import java.util.Set;
+import java.util.stream.Collectors;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.springframework.stereotype.Component;
+import org.mapstruct.MappingTarget;
 
-@Component
 @Mapper(config = MapperConfig.class)
 public interface BookMapper {
+
     BookDto toDto(Book book);
 
     @Mapping(target = "id", ignore = true)
-    Book toModel(CreateBookRequestDto requestDto);
+    Book toModel(CreateBookRequestDto createBookRequestDto);
+
+    BookDtoWithoutCategoryIds toDtoWithoutCategoryIds(Book book);
+
+    @AfterMapping
+    default void setCategoryIds(@MappingTarget BookDto bookDto, Book book) {
+        Set<Long> categoryIds = book.getCategories().stream()
+                .map(Category::getId)
+                .collect(Collectors.toSet());
+        bookDto.setCategoryIds(categoryIds);
+    }
 }

@@ -9,4 +9,8 @@ databaseChangeLog:
       file: db/changelog/changes/01-create_role-table.yaml
   - include:
       file: db/changelog/changes/insert-roles-to-db.yaml
+  - include:
+      file: db/changelog/changes/01-crate-category-table.yaml
+  - include:
+      file: db/changelog/changes/01-create-book-category-table.yaml
 

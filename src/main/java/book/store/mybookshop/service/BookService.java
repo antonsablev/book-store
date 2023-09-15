@@ -1,6 +1,7 @@
 package book.store.mybookshop.service;
 
 import book.store.mybookshop.dto.BookDto;
+import book.store.mybookshop.dto.BookDtoWithoutCategoryIds;
 import book.store.mybookshop.dto.CreateBookRequestDto;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
@@ -18,4 +19,7 @@ public interface BookService {
 
     List<BookDto> findByTitle(String bookTitle);
 
+    List<BookDtoWithoutCategoryIds> getByCategory(Long id);
+
+    void addCategoryToId(Long bookId, Long categoryId);
 }
