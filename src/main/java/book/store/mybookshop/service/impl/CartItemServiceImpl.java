@@ -17,8 +17,8 @@ public class CartItemServiceImpl implements CartItemService {
     private final CartItemMapper cartItemMapper;
 
     @Override
-    public void delete(Long id) {
-        repository.deleteById(id);
+    public CartItemDto save(CartItem cartItem) {
+        return cartItemMapper.toDto(repository.save(cartItem));
     }
 
     @Override
@@ -29,17 +29,17 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public CartItemDto updateQuantity(Long id, ChangeQuantityRequestDto requestDto) {
-        CartItem cartItem = repository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Can't find cart item by id: " + id)
-        );
+    public CartItemDto updateQuantity(Long id,
+                                      ChangeQuantityRequestDto requestDto,
+                                      CartItem cartItem) {
         cartItem.setQuantity(requestDto.getQuantity());
         repository.save(cartItem);
         return cartItemMapper.toDto(cartItem);
     }
 
     @Override
-    public CartItemDto save(CartItem cartItem) {
-        return cartItemMapper.toDto(repository.save(cartItem));
+    public void delete(Long id) {
+        repository.deleteById(id);
     }
+
 }

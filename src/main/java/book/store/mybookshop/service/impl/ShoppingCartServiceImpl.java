@@ -66,7 +66,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         isEnoughQuantity(amount, bookId, cartItem);
 
-        return cartItemService.updateQuantity(itemId, requestDto);
+        return cartItemService.updateQuantity(itemId, requestDto, cartItem);
     }
 
     private void updateCartItem(ShoppingCart shoppingCart, CreateCartItemRequestDto requestDto) {

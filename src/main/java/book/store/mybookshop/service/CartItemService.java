@@ -12,6 +12,8 @@ public interface CartItemService {
 
     CartItem findById(Long id);
 
-    CartItemDto updateQuantity(Long id, ChangeQuantityRequestDto requestDto);
+    CartItemDto updateQuantity(Long id,
+                               ChangeQuantityRequestDto requestDto,
+                               CartItem cartItem);
 
 }
