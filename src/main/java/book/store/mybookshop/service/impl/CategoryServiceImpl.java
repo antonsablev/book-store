@@ -1,7 +1,7 @@
 package book.store.mybookshop.service.impl;
 
-import book.store.mybookshop.dto.CategoryDto;
-import book.store.mybookshop.dto.CreateCategoryRequestDto;
+import book.store.mybookshop.dto.category.CategoryDto;
+import book.store.mybookshop.dto.category.CreateCategoryRequestDto;
 import book.store.mybookshop.exception.EntityNotFoundException;
 import book.store.mybookshop.mapper.CategoryMapper;
 import book.store.mybookshop.model.Category;
@@ -32,7 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryDto> getAll(Pageable pageable) {
+    public List<CategoryDto> findAll(Pageable pageable) {
         return repository.findAll(pageable).stream()
                 .map(categoryMapper::toDto)
                 .toList();

@@ -1,4 +1,4 @@
-package book.store.mybookshop.dto;
+package book.store.mybookshop.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

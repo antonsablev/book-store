@@ -1,8 +1,8 @@
 package book.store.mybookshop.controller;
 
-import book.store.mybookshop.dto.BookDtoWithoutCategoryIds;
-import book.store.mybookshop.dto.CategoryDto;
-import book.store.mybookshop.dto.CreateCategoryRequestDto;
+import book.store.mybookshop.dto.book.BookDtoWithoutCategoryIds;
+import book.store.mybookshop.dto.category.CategoryDto;
+import book.store.mybookshop.dto.category.CreateCategoryRequestDto;
 import book.store.mybookshop.service.BookService;
 import book.store.mybookshop.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,7 +36,7 @@ public class CategoryController {
             description = "Here you can find list with all categories")
     @GetMapping
     public List<CategoryDto> getAll(Pageable pageable) {
-        return categoryService.getAll(pageable);
+        return categoryService.findAll(pageable);
     }
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")

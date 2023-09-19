@@ -1,4 +1,4 @@
-package book.store.mybookshop.dto;
+package book.store.mybookshop.dto.category;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

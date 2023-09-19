@@ -1,0 +1,47 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-users
+      author: mybookshop
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: email
+                  value: admin@admin.com
+              - column:
+                  name: password
+                  value: $2a$10$l7wlcrpU7ncwbVK/qMUafe7gSFrzpXz3xj4Y3tOJo7BgQZT4rxMaq
+              - column:
+                  name: first_name
+                  value: Admin
+              - column:
+                  name: last_name
+                  value: Bob
+              - column:
+                  name: shipping_address
+                  value: CA Ronald str 7324
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  value: 2
+              - column:
+                  name: email
+                  value: user@user.com
+              - column:
+                  name: password
+                  value: $2a$10$l7wlcrpU7ncwbVK/qMUafe7gSFrzpXz3xj4Y3tOJo7BgQZT4rxMaq
+              - column:
+                  name: first_name
+                  value: User
+              - column:
+                  name: last_name
+                  value: Alice
+              - column:
+                  name: shipping_address
+                  value: CA Tomas Jefferson str 7324

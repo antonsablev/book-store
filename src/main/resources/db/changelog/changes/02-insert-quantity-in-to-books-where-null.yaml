@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: update-quantity-for-existing-books
+      author: mybookshop
+      changes:
+        - update:
+            tableName: books
+            columns:
+              - column:
+                  name: quantity
+                  value: 0
+            where: quantity IS NULL

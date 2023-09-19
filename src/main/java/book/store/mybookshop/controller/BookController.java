@@ -1,7 +1,8 @@
 package book.store.mybookshop.controller;
 
-import book.store.mybookshop.dto.BookDto;
-import book.store.mybookshop.dto.CreateBookRequestDto;
+import book.store.mybookshop.dto.book.BookDto;
+import book.store.mybookshop.dto.book.ChangeBookQuantityRequest;
+import book.store.mybookshop.dto.book.CreateBookRequestDto;
 import book.store.mybookshop.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -67,6 +68,15 @@ public class BookController {
     public BookDto update(@Parameter(description = "The book Id") @PathVariable Long id,
                           @RequestBody @Valid CreateBookRequestDto requestDto) {
         return bookService.updateById(id, requestDto);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/update-quantity/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Update book quantity", description = "You can update book quantity by Id")
+    public BookDto updateQuantity(@Parameter(description = "The book Id") @PathVariable Long id,
+                                  @RequestBody @Valid ChangeBookQuantityRequest requestDto) {
+        return bookService.updateQuantity(id, requestDto);
     }
 
     @PreAuthorize("hasRole('ADMIN')")

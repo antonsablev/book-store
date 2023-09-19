@@ -1,9 +1,9 @@
 package book.store.mybookshop.controller;
 
-import book.store.mybookshop.dto.CreateUserRequestDto;
-import book.store.mybookshop.dto.UserDto;
-import book.store.mybookshop.dto.UserLoginRequestDto;
-import book.store.mybookshop.dto.UserLoginResponseDto;
+import book.store.mybookshop.dto.user.CreateUserRequestDto;
+import book.store.mybookshop.dto.user.UserDto;
+import book.store.mybookshop.dto.user.UserLoginRequestDto;
+import book.store.mybookshop.dto.user.UserLoginResponseDto;
 import book.store.mybookshop.security.AuthenticationService;
 import book.store.mybookshop.service.UserService;
 import jakarta.validation.Valid;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
-
     private final UserService userService;
     private final AuthenticationService authenticationService;
 

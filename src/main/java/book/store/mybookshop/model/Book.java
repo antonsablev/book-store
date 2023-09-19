@@ -38,7 +38,6 @@ public class Book {
     @NotNull
     private BigDecimal price;
     private String description;
-    @Column(name = "cover_image")
     private String coverImage;
     @Column(nullable = false)
     private boolean isDeleted = false;
@@ -47,5 +46,7 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
+
+    private Integer quantity;
 
 }

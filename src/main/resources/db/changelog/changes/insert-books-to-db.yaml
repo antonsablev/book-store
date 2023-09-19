@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-books
+      author: mybookshop
+      changes:
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: title
+                  value: Harry Potter
+              - column:
+                  name: author
+                  value: J Rowling
+              - column:
+                  name: isbn
+                  value: l-15646846531
+              - column:
+                  name: price
+                  value: 15
+              - column:
+                  name: description
+                  value: This Book About awesome Wizard
+              - column:
+                  name: cover_Image
+                  value: C:\Users\Admin\images\hp.jpg
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: id
+                  value: 2
+              - column:
+                  name: title
+                  value: Thinking in Java
+              - column:
+                  name: author
+                  value: Bruce Ekkel
+              - column:
+                  name: isbn
+                  value: l-15648978641
+              - column:
+                  name: price
+                  value: 29
+              - column:
+                  name: description
+                  value: All that you need to know about java
+              - column:
+                  name: cover_Image
+                  value: C:\Users\Admin\images\thinking_in_java.jpg

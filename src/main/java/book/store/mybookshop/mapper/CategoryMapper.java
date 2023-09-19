@@ -1,8 +1,8 @@
 package book.store.mybookshop.mapper;
 
 import book.store.mybookshop.config.MapperConfig;
-import book.store.mybookshop.dto.CategoryDto;
-import book.store.mybookshop.dto.CreateCategoryRequestDto;
+import book.store.mybookshop.dto.category.CategoryDto;
+import book.store.mybookshop.dto.category.CreateCategoryRequestDto;
 import book.store.mybookshop.model.Category;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

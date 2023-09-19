@@ -13,4 +13,24 @@ databaseChangeLog:
       file: db/changelog/changes/01-crate-category-table.yaml
   - include:
       file: db/changelog/changes/01-create-book-category-table.yaml
+  - include:
+      file: db/changelog/changes/01-create-shopping-cart-table.yaml
+  - include:
+      file: db/changelog/changes/01-create-items-table.yaml
+  - include:
+      file: db/changelog/changes/insert-users-to-db.yaml
+  - include:
+      file: db/changelog/changes/insert-book-category-to-db.yaml
+  - include:
+      file: db/changelog/changes/insert-books-to-db.yaml
+  - include:
+      file: db/changelog/changes/insert-categories-to-db.yaml
+  - include:
+      file: db/changelog/changes/insert-users-roles-to-db.yaml
+  - include:
+      file: db/changelog/changes/02-add-quantity-field-to-book.yaml
+  - include:
+      file: db/changelog/changes/02-insert-quantity-in-to-books-where-null.yaml
+
+
 

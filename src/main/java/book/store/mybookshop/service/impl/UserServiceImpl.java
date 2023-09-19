@@ -1,7 +1,7 @@
 package book.store.mybookshop.service.impl;
 
-import book.store.mybookshop.dto.CreateUserRequestDto;
-import book.store.mybookshop.dto.UserDto;
+import book.store.mybookshop.dto.user.CreateUserRequestDto;
+import book.store.mybookshop.dto.user.UserDto;
 import book.store.mybookshop.exception.EntityNotFoundException;
 import book.store.mybookshop.exception.RegistrationException;
 import book.store.mybookshop.mapper.UserMapper;
@@ -39,6 +39,13 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new EntityNotFoundException("Can't find Role"))));
         userRepository.save(user);
         return userMapper.toDto(user);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.getByEmail(email).orElseThrow(
+                () -> new EntityNotFoundException("Can't find User with email: " + email)
+        );
     }
 
     private User getUser(CreateUserRequestDto userRequestDto) {
