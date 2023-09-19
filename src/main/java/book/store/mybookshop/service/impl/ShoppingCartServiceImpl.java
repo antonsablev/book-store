@@ -50,10 +50,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         CartItem cartItem = findCartItem(shoppingCart,
                 requestDto.getBookId()).get();
 
-        if (!isEnoughQuantity(quantity, bookId, cartItem)) {
-            throw new NotEnoughProductsException(
-                    "Not enough products available in stock for book: " + bookId);
-        }
+        isEnoughQuantity(quantity, bookId, cartItem);
 
         updateCartItem(shoppingCart, requestDto);
         return shoppingCartMapper.toDto(shoppingCart);
@@ -67,10 +64,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         CartItem cartItem = cartItemService.findById(itemId);
         Long bookId = cartItem.getBook().getId();
 
-        if (!isEnoughQuantity(amount, bookId, cartItem)) {
-            throw new NotEnoughProductsException(
-                    "Not enough products available in stock for book: " + bookId);
-        }
+        isEnoughQuantity(amount, bookId, cartItem);
 
         return cartItemService.updateQuantity(itemId, requestDto);
     }
@@ -101,10 +95,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         );
     }
 
-    private boolean isEnoughQuantity(Integer amount,
-                                Long bookId,
-                                CartItem cartItem) {
-        return bookService.get(bookId).getQuantity() > (amount + cartItem.getQuantity());
+    private void isEnoughQuantity(Integer amount,
+                                  Long bookId,
+                                  CartItem cartItem) {
+        if (!(bookService.get(bookId).getQuantity() > (amount + cartItem.getQuantity()))) {
+            throw new NotEnoughProductsException(
+                    "Not enough products available in stock for book: " + bookId);
+        }
     }
 
     private Optional<CartItem> findCartItem(ShoppingCart shoppingCart,
