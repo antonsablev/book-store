@@ -1,4 +1,4 @@
-package book.store.mybookshop.dto;
+package book.store.mybookshop.dto.user;
 
 import book.store.mybookshop.lib.FieldMatch;
 import jakarta.validation.constraints.Email;

@@ -1,7 +1,7 @@
 package book.store.mybookshop.controller;
 
-import book.store.mybookshop.dto.CreateUserRequestDto;
-import book.store.mybookshop.dto.UserDto;
+import book.store.mybookshop.dto.user.CreateUserRequestDto;
+import book.store.mybookshop.dto.user.UserDto;
 import book.store.mybookshop.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
-
     private final UserService userService;
 
     @PostMapping("/register-admin")

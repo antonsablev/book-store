@@ -1,4 +1,4 @@
-package book.store.mybookshop.dto;
+package book.store.mybookshop.dto.book;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -20,4 +20,6 @@ public class CreateBookRequestDto {
     private String description;
     private String coverImage;
     private Set<Long> category;
+    @NotNull
+    private Integer quantity;
 }

@@ -1,8 +1,8 @@
 package book.store.mybookshop.mapper;
 
 import book.store.mybookshop.config.MapperConfig;
-import book.store.mybookshop.dto.CreateUserRequestDto;
-import book.store.mybookshop.dto.UserDto;
+import book.store.mybookshop.dto.user.CreateUserRequestDto;
+import book.store.mybookshop.dto.user.UserDto;
 import book.store.mybookshop.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

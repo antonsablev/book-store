@@ -1,8 +1,9 @@
 package book.store.mybookshop.service.impl;
 
-import book.store.mybookshop.dto.BookDto;
-import book.store.mybookshop.dto.BookDtoWithoutCategoryIds;
-import book.store.mybookshop.dto.CreateBookRequestDto;
+import book.store.mybookshop.dto.book.BookDto;
+import book.store.mybookshop.dto.book.BookDtoWithoutCategoryIds;
+import book.store.mybookshop.dto.book.ChangeBookQuantityRequest;
+import book.store.mybookshop.dto.book.CreateBookRequestDto;
 import book.store.mybookshop.exception.EntityNotFoundException;
 import book.store.mybookshop.mapper.BookMapper;
 import book.store.mybookshop.model.Book;
@@ -82,5 +83,22 @@ public class BookServiceImpl implements BookService {
                 () -> new EntityNotFoundException("Can't find category " + categoryId)));
         book.setCategories(categories);
         bookRepository.save(book);
+    }
+
+    @Override
+    public Book findById(Long id) {
+        return bookRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Can't find book with id: " + id)
+        );
+    }
+
+    @Override
+    public BookDto updateQuantity(Long id, ChangeBookQuantityRequest requestDto) {
+        Book book = bookRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Can't find book with id: " + id)
+        );
+        book.setQuantity(requestDto.getQuantity());
+        bookRepository.save(book);
+        return bookMapper.toDto(book);
     }
 }

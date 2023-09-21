@@ -1,4 +1,4 @@
-package book.store.mybookshop.dto;
+package book.store.mybookshop.dto.book;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -14,4 +14,5 @@ public class BookDto {
     private String description;
     private String coverImage;
     private Set<Long> categoryIds;
+    private Integer quantity;
 }
