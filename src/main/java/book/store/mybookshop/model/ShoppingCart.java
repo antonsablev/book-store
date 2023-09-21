@@ -1,5 +1,6 @@
 package book.store.mybookshop.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +24,6 @@ public class ShoppingCart {
     @OneToOne
     @NotNull
     private User user;
-    @OneToMany(mappedBy = "shoppingCart")
+    @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.REMOVE)
     private Set<CartItem> cartItems;
 }

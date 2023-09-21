@@ -4,7 +4,6 @@ import book.store.mybookshop.dto.cartitem.CartItemDto;
 import book.store.mybookshop.dto.cartitem.ChangeQuantityRequestDto;
 import book.store.mybookshop.dto.cartitem.CreateCartItemRequestDto;
 import book.store.mybookshop.dto.shoppingcart.ShoppingCartDto;
-import book.store.mybookshop.exception.EntityNotFoundException;
 import book.store.mybookshop.exception.NotEnoughProductsException;
 import book.store.mybookshop.mapper.CartItemMapper;
 import book.store.mybookshop.mapper.ShoppingCartMapper;
@@ -33,12 +32,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public ShoppingCartDto findByUser(Authentication authentication) {
-        ShoppingCart shoppingCart = findCart(authentication);
-        if (shoppingCart != null) {
-            return shoppingCartMapper.toDto(shoppingCart);
-        } else {
-            return shoppingCartMapper.toDto(createNewShoppingCart(authentication.getName()));
-        }
+        return shoppingCartMapper.toDto(findCart(authentication));
     }
 
     @Override
@@ -47,12 +41,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart shoppingCart = findCart(authentication);
         Long bookId = requestDto.getBookId();
         Integer quantity = requestDto.getQuantity();
-        CartItem cartItem = findCartItem(shoppingCart,
-                requestDto.getBookId()).get();
+        Optional<CartItem> cartItem = findCartItem(shoppingCart,
+                requestDto.getBookId());
 
-        isEnoughQuantity(quantity, bookId, cartItem);
+        if (cartItem.isPresent()) {
+            isEnoughQuantity(quantity, bookId, cartItem.get());
+            updateCartItem(shoppingCart, requestDto);
+        } else {
+            createCartItem(shoppingCart, requestDto);
+        }
 
-        updateCartItem(shoppingCart, requestDto);
         return shoppingCartMapper.toDto(shoppingCart);
     }
 
@@ -69,17 +67,31 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return cartItemService.updateQuantity(itemId, requestDto, cartItem);
     }
 
+    @Override
+    public ShoppingCart findCartById(Authentication authentication) {
+        return findCart(authentication);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
+
     private void updateCartItem(ShoppingCart shoppingCart, CreateCartItemRequestDto requestDto) {
         Optional<CartItem> cartItem = findCartItem(shoppingCart, requestDto.getBookId());
         if (cartItem.isPresent()) {
             cartItem.get().setQuantity(cartItem.get().getQuantity() + requestDto.getQuantity());
             cartItemService.save(cartItem.get());
         } else {
-            CartItem newItem = cartItemMapper.toModel(requestDto);
-            newItem.setShoppingCart(shoppingCart);
-            newItem.setBook(bookService.findById(requestDto.getBookId()));
-            cartItemService.save(newItem);
+            createCartItem(shoppingCart, requestDto);
         }
+    }
+
+    private void createCartItem(ShoppingCart shoppingCart, CreateCartItemRequestDto requestDto) {
+        CartItem newItem = cartItemMapper.toModel(requestDto);
+        newItem.setShoppingCart(shoppingCart);
+        newItem.setBook(bookService.findById(requestDto.getBookId()));
+        cartItemService.save(newItem);
     }
 
     private ShoppingCart createNewShoppingCart(String userEmail) {
@@ -90,9 +102,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     private ShoppingCart findCart(Authentication authentication) {
         User user = userService.findByEmail(authentication.getName());
-        return repository.getByUserId(user.getId()).orElseThrow(
-                () -> new EntityNotFoundException("Can't find shopping cart")
-        );
+        Optional<ShoppingCart> shoppingCart = repository.getByUserId(user.getId());
+        if (shoppingCart.isPresent()) {
+            return shoppingCart.get();
+        } else {
+            return createNewShoppingCart(authentication.getName());
+        }
     }
 
     private void isEnoughQuantity(Integer amount,
