@@ -65,5 +65,4 @@ public class ShoppingCartController {
     public void deleteItem(@PathVariable Long cartItemId) {
         cartItemService.delete(cartItemId);
     }
-
 }
