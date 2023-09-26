@@ -20,5 +20,4 @@ public interface OrderService {
     OrderItemDto getOrderItem(Long orderId, Long itemId);
 
     OrderDto updateStatus(Long id, Order.Status status);
-
 }
