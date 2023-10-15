@@ -35,7 +35,7 @@ Ensure that you have Docker installed on your system. You can download Docker fr
 
 Navigate to the directory of your project where the Dockerfile is located and run the following command to build the Docker image. For example:
 
- ```http
+ ```
   docker build -t litmarket .
 ```
 This will create a Docker image with the name "litmarket."
@@ -44,7 +44,7 @@ This will create a Docker image with the name "litmarket."
 
 Create a file named .env in the root directory of your project. In this file, you can define environment variables required to configure your application. For example:
 
-```http
+```
 MYSQL_ROOT_PASSWORD=root
 MYSQL_USER=root
 MYSQL_PASSWORD=root
